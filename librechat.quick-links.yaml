@@ -1,0 +1,37 @@
+version: 1.2.8
+cache: true
+
+interface:
+  customWelcome: "Welcome to LibreChat with Quick Links! 🔗"
+
+  externalLinks:
+    # Default: "Links" (if not specified)
+    header: "Quick Links"
+    links:
+      - title: "MY NOS"
+        url: "https://www.nos.pt"
+      # Search Engines
+      - title: "Google Search"
+        url: "https://www.google.com"
+      - title: "DuckDuckGo"
+        url: "https://duckduckgo.com"
+      # Documentation & Resources
+      - title: "LibreChat Docs"
+        url: "https://www.librechat.ai/docs"
+      # Utilities
+      - title: "JSON Formatter"
+        url: "https://jsonformatter.org"
+      - title: "RegEx Tester"
+        url: "https://regex101.com"
+
+registration:
+  socialLogins: ['google', 'github']
+
+endpoints:
+  custom:
+    - name: "Local Assistant"
+      apiKey: "not-required"
+      baseURL: "http://localhost:1234/v1"
+      models:
+        default: ["local-model"]
+        fetch: false

@@ -492,6 +492,19 @@ const mcpServersSchema = z.object({
 
 export type TMcpServersConfig = z.infer<typeof mcpServersSchema>;
 
+export const externalLinkSchema = z.object({
+  title: z.string(),
+  url: z.string().url(),
+});
+
+export const externalLinksSchema = z.object({
+  header: z.string().optional(),
+  links: z.array(externalLinkSchema).optional(),
+}).optional();
+
+export type TExternalLink = z.infer<typeof externalLinkSchema>;
+export type TExternalLinks = z.infer<typeof externalLinksSchema>;
+
 export const intefaceSchema = z
   .object({
     privacyPolicy: z
@@ -518,6 +531,7 @@ export const intefaceSchema = z
     runCode: z.boolean().optional(),
     webSearch: z.boolean().optional(),
     fileSearch: z.boolean().optional(),
+    externalLinks: externalLinksSchema,
   })
   .default({
     endpointsMenu: true,
@@ -534,6 +548,7 @@ export const intefaceSchema = z
     runCode: true,
     webSearch: true,
     fileSearch: true,
+    externalLinks: { links: [] },
   });
 
 export type TInterfaceConfig = z.infer<typeof intefaceSchema>;
@@ -754,6 +769,7 @@ export const configSchema = z.object({
   includedTools: z.array(z.string()).optional(),
   filteredTools: z.array(z.string()).optional(),
   mcpServers: MCPServersSchema.optional(),
+  externalLinks: externalLinksSchema,
   interface: intefaceSchema,
   turnstile: turnstileSchema.optional(),
   fileStrategy: fileSourceSchema.default(FileSources.local),

@@ -1,0 +1,28 @@
+services:
+  librechat:
+    container_name: librechat-quick-links
+    image: librechat:v0.7.9-quick-links
+    restart: unless-stopped
+    ports:
+      - "3080:3080"
+    depends_on:
+      - mongodb
+    environment:
+      - HOST=0.0.0.0
+      - MONGO_URI=mongodb://mongodb:27017/LibreChat
+      - NODE_ENV=production
+      - JWT_SECRET=test-secret-for-quick-links
+      - JWT_REFRESH_SECRET=test-refresh-secret
+      - CREDS_KEY=test-creds-key
+      - CREDS_IV=test-creds-iv
+    volumes:
+      - ./librechat.quick-links.yaml:/app/librechat.yaml:ro
+    stdin_open: true
+
+  mongodb:
+    container_name: mongodb-quick-links
+    image: mongo
+    restart: unless-stopped
+    command: mongod --noauth
+    ports:
+      - "27017:27017"
